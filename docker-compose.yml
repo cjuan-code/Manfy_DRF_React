@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+
+  db:
+    container_name: mysqlContainer
+    image: mysql:latest
+    ports: 
+      - "30000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - test_drf_react_mysql:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - test_drf_react
+
+  backend:
+    container_name: djangoContainer
+    build: ./backend/
+    depends_on:
+      - db
+    volumes:
+      - ./backend/:/app/backend/
+    ports:
+      - "8000:8000"
+    networks:
+      - test_drf_react
+    working_dir: /app/backend/
+    command: "python3 manage.py runserver 0:8000"
+
+  frontend:
+    container_name: reactContainer
+    build: ./frontend/
+    depends_on: 
+      - backend
+    volumes: 
+      - ./frontend/:/app/frontend/
+    ports:
+      - "3000:3000"
+    networks:
+      - test_drf_react
+    working_dir: /app/frontend/
+    command: bash -c "npm install && npm start"  
+
+networks:
+  test_drf_react:
+volumes:
+  test_drf_react_mysql:
