@@ -25,7 +25,7 @@ services:
     networks:
       - test_drf_react
     working_dir: /app/backend/
-    command: "python3 manage.py runserver 0:8000"
+    command: "python manage.py runserver 0:8000"
 
   frontend:
     container_name: reactContainer
@@ -47,6 +47,5 @@ networks:
       config:
         - subnet: 172.69.0.0/24
           gateway: 172.69.0.1
-
 volumes:
   test_drf_react_mysql:
