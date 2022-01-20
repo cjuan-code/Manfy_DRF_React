@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ktcim@#&93y(wigb&*k0s&%sotb4h&0@6po*fjh2le)-!!rk73
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'manfy.apps.users',
+    'manfy.apps.reservations'
 ]
 
 MIDDLEWARE = [
@@ -79,7 +81,7 @@ DATABASES = {
         'NAME': 'manfy',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'HOST': '172.69.0.1',
         'PORT': '30000'
     }
 }
