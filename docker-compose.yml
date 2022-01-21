@@ -13,7 +13,6 @@ services:
       - test_drf_react_mysql:/docker-entrypoint-initdb.d/:ro
     networks:
       - test_drf_react
-
   backend:
     container_name: djangoContainer
     build: ./backend/
@@ -22,11 +21,11 @@ services:
     volumes:
       - ./backend/:/app/backend/
     ports:
-      - "8000:8000"
+      - "8005:8000"
     networks:
       - test_drf_react
     working_dir: /app/backend/
-    command: "python3 manage.py runserver 0:8000"
+    command: "python manage.py runserver 0:8000"
 
   frontend:
     container_name: reactContainer
@@ -44,5 +43,9 @@ services:
 
 networks:
   test_drf_react:
+    ipam:
+      config:
+        - subnet: 172.69.0.0/24
+          gateway: 172.69.0.1
 volumes:
   test_drf_react_mysql:
