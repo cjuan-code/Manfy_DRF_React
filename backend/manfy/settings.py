@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'manfy.apps.users',
-    'manfy.apps.reservations'
+    'manfy.apps.reservations',
     'manfy.apps.restaurants'
 ]
 
