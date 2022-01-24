@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -76,13 +76,21 @@ WSGI_APPLICATION = 'manfy.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'manfy',
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    #     'HOST': '172.69.0.1',
+    #     'PORT': '30000'
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'manfy',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '172.69.0.1',
-        'PORT': '30000'
+        'NAME': os.environ.get('MYSQL_DATABASE', 'mysql-db'),
+        'USER': os.environ.get('MYSQL_USER_DJANGO', 'mysql-user'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'mysql-password'),
+        'HOST': os.environ.get('MYSQL_DATABASE_HOST', 'db'),
+        'PORT': os.environ.get('MYSQL_DATABASE_PORT', 3306),
     }
 }
 

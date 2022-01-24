@@ -3,3 +3,5 @@ asgiref==3.4.1
 django-cors-headers
 pymysql==1.0.2
 cryptography
+mysqlclient
+djangorestframework
