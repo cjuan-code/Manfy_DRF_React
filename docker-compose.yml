@@ -1,51 +1,53 @@
-version: '3'
+version: "3"
 
 services:
-
   db:
+    image: mysql:5.7
     container_name: mysqlContainer
-    image: mysql:latest
-    ports: 
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
       - "30000:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
+    env_file: .env
+    restart: always
     volumes:
       - test_drf_react_mysql:/docker-entrypoint-initdb.d/:ro
+      - test_drf_mysql_data:/var/lib/mysql
     networks:
       - test_drf_react
+
   backend:
-    container_name: djangoContainer
     build: ./backend/
-    depends_on:
-      - db
+    container_name: djangoContainer
+    command: sh -c "./wait-for-it.sh db:3306; python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    working_dir: /app/backend/
+    env_file: .env
     volumes:
       - ./backend/:/app/backend/
     ports:
       - "8005:8000"
+    depends_on:
+      - db
     networks:
       - test_drf_react
-    working_dir: /app/backend/
-    command: "python manage.py runserver 0:8000"
 
   frontend:
-    container_name: reactContainer
     build: ./frontend/
-    depends_on: 
-      - backend
-    volumes: 
+    container_name: reactContainer
+    command: bash -c "npm install && npm start"
+    working_dir: /app/frontend/
+    volumes:
       - ./frontend/:/app/frontend/
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
     networks:
       - test_drf_react
-    working_dir: /app/frontend/
-    command: bash -c "npm install && npm start"  
 
 networks:
   test_drf_react:
-    ipam:
-      config:
-        - subnet: 172.69.0.0/24
-          gateway: 172.69.0.1
 volumes:
   test_drf_react_mysql:
+  test_drf_mysql_data:
+  
