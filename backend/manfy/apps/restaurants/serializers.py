@@ -13,6 +13,25 @@ class tableSerializer(serializers.ModelSerializer):
         model = Table
         fields = ('id','capacity','sector','id_restaurant_id')
 
+    def to_img(self,instance) :
+        return {
+            'id': instance.id,
+            'url': instance.url
+        }
+
+class tableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Table
+        fields = ('id','capacity','sector','restaurant_id')
+
+        def to_tables(self,instance):
+            return{
+                'id': instance.id,
+                'capacity': instance.capacity,
+                'sector': instance.sector,
+                'restaurant_id': instance.restaurant_id
+            }
+
 class restaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
