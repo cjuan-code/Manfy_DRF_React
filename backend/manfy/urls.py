@@ -19,5 +19,7 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('manfy/', include('manfy.apps.restaurants.urls'))
+    path('manfy/', include('manfy.apps.restaurants.urls')),
+    path('manfy/', include('manfy.apps.users.urls')),
+    # path('manfy/', include('manfy.apps.reservations.urls'))
 ]
