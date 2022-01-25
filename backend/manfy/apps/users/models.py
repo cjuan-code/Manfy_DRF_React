@@ -35,11 +35,9 @@ class User(AbstractBaseUser, TimestampedModel):
 
 class Incident(TimestampedModel):
     body = models.TextField('body', max_length=300, blank=True)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-    restaurant = models.ForeignKey('restaurants.Restaurant', on_delete=models.CASCADE)
+    id_user = models.ForeignKey(User, related_name="id_user_id", on_delete=models.CASCADE,null = True)
+    id_restaurant = models.ForeignKey(Restaurant,related_name="id_restaurant_id", on_delete=models.CASCADE,null = True)
     recipient = models.TextField('recipient')
-
-    REQUIRED_FIELDS = ['body', 'id_user', 'id_rest', 'recipient']
 
     def __str__(self):
         return str(self.id)

@@ -6,7 +6,7 @@ class Restaurant (models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 class Table (models.Model):
     restaurant = models.ForeignKey('restaurants.Restaurant' , related_name='tables' , on_delete=models.CASCADE)
