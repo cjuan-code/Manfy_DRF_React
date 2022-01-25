@@ -7,6 +7,11 @@ class imgSerializer(serializers.ModelSerializer):
         model = Img
         fields = ('id','url')
 
+class tableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Table
+        fields = ('id','capacity','sector','id_restaurant_id')
+
     def to_img(self,instance) :
         return {
             'id': instance.id,
