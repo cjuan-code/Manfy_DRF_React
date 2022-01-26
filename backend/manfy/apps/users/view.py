@@ -1,10 +1,11 @@
 from .models import (User,Incident)
 from .serializers import incidentSerializer
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response 
 from rest_framework import generics, mixins, status, viewsets
 from rest_framework.permissions import (AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser,)
 
-class CreateIncident(generics.ListCreateAPIView):
+class IncidentView(viewsets.GenericViewSet):
     # permission_classes = (IsAuthenticated)
     serializer_class = incidentSerializer
     def create(self,request):
@@ -20,5 +21,4 @@ class CreateIncident(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+        return Response(serializer.data, status=status.HTTP_201_CREATED)     
