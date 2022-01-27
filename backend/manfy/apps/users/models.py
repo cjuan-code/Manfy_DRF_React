@@ -1,9 +1,11 @@
+from enum import unique
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
 from manfy.apps.core.models import TimestampedModel
 from manfy.apps.restaurants.models import Restaurant
 
 class User(AbstractBaseUser, TimestampedModel):
+    uuid = models.UUIDField('uuid', unique=True, editable=False)
     email = models.EmailField('email', unique=True)
     first_name = models.CharField('first_name', max_length=30, blank=True)
     last_name = models.CharField('last_name', max_length=30, blank=True)
