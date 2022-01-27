@@ -43,4 +43,4 @@ class restaurantSerializer(serializers.ModelSerializer):
             'adress' : instance.adress,
             'name' : instance.name
         }
-        
+
