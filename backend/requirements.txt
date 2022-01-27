@@ -1,0 +1,9 @@
+Django==4.0.1
+asgiref==3.4.1
+django-cors-headers
+pymysql==1.0.2
+cryptography
+mysqlclient
+djangorestframework
+PyJWT==1.7.1
+djangorestframework-jwt==1.11.0

@@ -1,4 +1,0 @@
-Django==4.0.1
-asgiref==3.4.1
-django-cors-headers
-django-mysql==4.4.0

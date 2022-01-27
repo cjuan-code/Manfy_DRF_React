@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-ktcim@#&93y(wigb&*k0s&%sotb4h&0@6po*fjh2le)-!!rk73
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
 
 # Application definition
 
@@ -37,6 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'manfy.apps.users',
+    'manfy.apps.reservations',
+    'manfy.apps.restaurants'
 ]
 
 MIDDLEWARE = [
@@ -74,13 +76,21 @@ WSGI_APPLICATION = 'manfy.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'manfy',
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    #     'HOST': '172.69.0.1',
+    #     'PORT': '30000'
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'manfy',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '30000'
+        'NAME': os.environ.get('MYSQL_DATABASE', 'mysql-db'),
+        'USER': os.environ.get('MYSQL_USER_DJANGO', 'mysql-user'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'mysql-password'),
+        'HOST': os.environ.get('MYSQL_DATABASE_HOST', 'db'),
+        'PORT': os.environ.get('MYSQL_DATABASE_PORT', 3306),
     }
 }
 
@@ -125,3 +135,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'manfy.apps.users.backends.JWTAuthentication',
+    )
+}
