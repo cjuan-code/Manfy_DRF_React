@@ -2,7 +2,7 @@ from django.db import models
 from manfy.apps.core.models import TimestampedModel
 
 class Restaurant (TimestampedModel, models.Model):
-    slug = models.SlugField(max_length=100,unique=True)
+    slug = models.SlugField(max_length=100,unique=True, editable=False)
     address = models.TextField()
     name = models.CharField(max_length=255)
 
