@@ -9,8 +9,8 @@ class CreateIncident(generics.ListCreateAPIView):
     serializer_class = incidentSerializer
     def create(self,request):
         serializer_context = {
-            'id_restaurant_id':request.data['id_restaurant_id'],
-            'id_user_id':request.data['id_user_id'],
+            'restaurant_id':request.data['restaurant_id'],
+            'user_id':request.data['user_id'],
             'request': request
         }
         serializer_data = request.data

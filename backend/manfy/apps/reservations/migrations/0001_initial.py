@@ -9,25 +9,22 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('users', '__first__'),
+        ('restaurants', '__first__'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Img',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.TextField(max_length=255)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Restaurant',
+            name='Reservation',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('slug', models.SlugField(max_length=100, unique=True)),
-                ('address', models.TextField()),
-                ('name', models.CharField(max_length=255)),
+                ('hour', models.CharField(max_length=10, verbose_name='hour')),
+                ('day', models.CharField(max_length=10, verbose_name='day')),
+                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='restaurants.restaurant')),
+                ('table', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='restaurants.table')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='users.user')),
             ],
             options={
                 'ordering': ['-created_at', '-updated_at'],
@@ -35,14 +32,14 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Table',
+            name='Notification',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('capacity', models.IntegerField()),
-                ('sector', models.CharField(max_length=255)),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tables', to='restaurants.restaurant')),
+                ('estimated_hour', models.TextField()),
+                ('reservation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='reservations.reservation')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.user')),
             ],
             options={
                 'ordering': ['-created_at', '-updated_at'],

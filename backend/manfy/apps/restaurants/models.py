@@ -1,6 +1,7 @@
 from django.db import models
+from manfy.apps.core.models import TimestampedModel
 
-class Restaurant (models.Model):
+class Restaurant (TimestampedModel, models.Model):
     slug = models.SlugField(max_length=100,unique=True)
     address = models.TextField()
     name = models.CharField(max_length=255)
@@ -8,7 +9,7 @@ class Restaurant (models.Model):
     def __str__(self):
         return str(self.id)
 
-class Table (models.Model):
+class Table (TimestampedModel, models.Model):
     restaurant = models.ForeignKey('restaurants.Restaurant' , related_name='tables' , on_delete=models.CASCADE)
     capacity = models.IntegerField()
     sector = models.CharField(max_length=255)
