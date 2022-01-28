@@ -1,17 +1,16 @@
 from django.db import models
+from manfy.apps.core.models import TimestampedModel
 
-class Restaurant (models.Model):
-    slug = models.SlugField(max_length=100,unique=True)
+class Restaurant (TimestampedModel, models.Model):
+    slug = models.SlugField(max_length=100,unique=True, editable=False)
     address = models.TextField()
     name = models.CharField(max_length=255)
-    ntables = models.IntegerField()
-    nincidents = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return str(self.id)
 
-class Table (models.Model):
-    id_restaurant = models.ForeignKey('restaurants.Restaurant' , related_name='tables' , on_delete=models.CASCADE)
+class Table (TimestampedModel, models.Model):
+    restaurant = models.ForeignKey('restaurants.Restaurant' , related_name='tables' , on_delete=models.CASCADE)
     capacity = models.IntegerField()
     sector = models.CharField(max_length=255)
 
