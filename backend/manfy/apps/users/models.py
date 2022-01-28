@@ -8,7 +8,7 @@ from manfy.apps.core.models import TimestampedModel
 from manfy.apps.restaurants.models import Restaurant
 
 class User(AbstractBaseUser, TimestampedModel):
-    uuid = models.UUIDField('uuid', unique=True, editable=False)
+    uuid = models.CharField('uuid', max_length=36,unique=True, editable=False)
     email = models.EmailField('email', unique=True)
     first_name = models.CharField('first_name', max_length=30, blank=True)
     last_name = models.CharField('last_name', max_length=30, blank=True)
@@ -41,8 +41,8 @@ class User(AbstractBaseUser, TimestampedModel):
 
 class Incident(TimestampedModel):
     body = models.TextField('body', max_length=300, blank=True)
-    user = models.ForeignKey(User, related_name="id_user_id", on_delete=models.CASCADE,null = True)
-    restaurant = models.ForeignKey(Restaurant,related_name="id_restaurant_id", on_delete=models.CASCADE,null = True)
+    user = models.ForeignKey(User, related_name="user_id", on_delete=models.CASCADE,null = True)
+    restaurant = models.ForeignKey(Restaurant,related_name="restaurant_id", on_delete=models.CASCADE,null = True)
     recipient = models.TextField('recipient')
 
     def __str__(self):
