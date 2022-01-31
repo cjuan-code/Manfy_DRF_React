@@ -22,6 +22,7 @@ class IncidentView(viewsets.GenericViewSet):
         serializer.save()
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)   
+<<<<<<< HEAD
 
 class UserView(viewsets.GenericViewSet):
     permission_classes = (AllowAny,)
@@ -73,4 +74,28 @@ class UserView(viewsets.GenericViewSet):
 
         return Response(serializer, status=status.HTTP_200_OK)
 
+=======
+>>>>>>> 47cd1bd02cdaab88845578c1e2389b71e441d83e
 
+class UserView(viewsets.GenericViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = userSerializer
+
+    def login(self,request):
+        email = request.data['email']
+        password = request.data['password']
+        serializer_context = {
+            'password': password
+        }
+        if email is None:
+            raise NotFound('Email is required!')
+
+        if password is None:
+            raise NotFound("Password is required!")
+
+        user = request.data
+        serializer = userSerializer.login(data=user,context = serializer_context)
+        return Response(serializer, status=status.HTTP_200_OK)
+
+    def register(self,request):
+        print('register')  
