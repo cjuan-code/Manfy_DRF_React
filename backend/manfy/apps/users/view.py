@@ -22,7 +22,6 @@ class IncidentView(viewsets.GenericViewSet):
         serializer.save()
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)   
-<<<<<<< HEAD
 
 class UserView(viewsets.GenericViewSet):
     permission_classes = (AllowAny,)
@@ -73,9 +72,6 @@ class UserView(viewsets.GenericViewSet):
         serializer = userSerializer.register(serializer_context)
 
         return Response(serializer, status=status.HTTP_200_OK)
-
-=======
->>>>>>> 47cd1bd02cdaab88845578c1e2389b71e441d83e
 
 class UserView(viewsets.GenericViewSet):
     permission_classes = (AllowAny,)
