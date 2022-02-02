@@ -45,7 +45,6 @@ class userSerializer(serializers.ModelSerializer):
             },
             'token': user.token,
         }
- 
 
     def login(data,context):
         email = data.get('email', None)
@@ -65,6 +64,7 @@ class userSerializer(serializers.ModelSerializer):
         if user is None:
             raise serializers.ValidationError(
                 'User with this email and password was not found.'
+
             )
 
         if not user.is_active:
@@ -84,6 +84,7 @@ class userSerializer(serializers.ModelSerializer):
             },
             'token': user.token
         }
+
         
 class incidentSerializer(serializers.ModelSerializer):
     class Meta:
