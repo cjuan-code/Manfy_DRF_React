@@ -1,0 +1,7 @@
+img{
+    height: 500px !important;
+}
+
+.container-list>.card-restaurants{
+    max-width: 33%;
+}
