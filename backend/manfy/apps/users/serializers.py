@@ -7,9 +7,44 @@ class userSerializer(serializers.ModelSerializer):
         model = User
         fields = ('password','email','first_name','last_name')
 
-    def register(self,validate_data):
-        user = User.objects.create(**validate_data)
-        return user
+    def register(context):
+
+        email = context['email']
+        password = context['password']
+        first_name = context['first_name']
+        last_name = context['last_name']
+
+        try:
+            user = User.objects.get(email = email)
+
+            raise serializers.ValidationError(
+                'User with this email already exists.'
+            )
+
+        except User.DoesNotExist:
+            
+            user = User.objects.create(
+                email = email, 
+                password = password, 
+                first_name = first_name, 
+                last_name = last_name,
+                n_incidents = 0,
+                n_coupons = 0,
+                is_active = True
+            )
+            
+        return {
+            'user': {
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'full_name': user.fullname,
+                'n_incidents': user.n_incidents,
+                'n_coupons': user.n_coupons,
+                'is_active': user.is_active
+            },
+            'token': user.token,
+        }
 
     def login(data,context):
         email = data.get('email', None)
@@ -28,7 +63,8 @@ class userSerializer(serializers.ModelSerializer):
         
         if user is None:
             raise serializers.ValidationError(
-                'A user with this email and password was not found.'
+                'User with this email and password was not found.'
+
             )
 
         if not user.is_active:
@@ -37,10 +73,18 @@ class userSerializer(serializers.ModelSerializer):
             )
 
         return {
-            'email': user.email,
-            'FullName': user.fullname,
+            'user': {
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'full_name': user.fullname,
+                'n_incidents': user.n_incidents,
+                'n_coupons': user.n_coupons,
+                'is_active': user.is_active
+            },
             'token': user.token
         }
+
         
 class incidentSerializer(serializers.ModelSerializer):
     class Meta:

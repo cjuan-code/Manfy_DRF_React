@@ -24,7 +24,7 @@ class User(AbstractBaseUser, TimestampedModel):
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
-
+        
     @property
     def fullname(self):
         '''
@@ -38,16 +38,7 @@ class User(AbstractBaseUser, TimestampedModel):
         Returns the short name for the user.
         '''
         return self.first_name
-
-class Incident(TimestampedModel):
-    body = models.TextField('body', max_length=300, blank=True)
-    user = models.ForeignKey(User, related_name="user_id", on_delete=models.CASCADE,null = True)
-    restaurant = models.ForeignKey(Restaurant,related_name="restaurant_id", on_delete=models.CASCADE,null = True)
-    recipient = models.TextField('recipient')
-
-    def __str__(self):
-        return str(self.id)
-
+    
     @property
     def token(self):
         return self.generate_token_jwt()
@@ -61,3 +52,12 @@ class Incident(TimestampedModel):
         }, settings.SECRET_KEY, algorithm='HS256')
 
         return token.decode('utf-8')
+
+class Incident(TimestampedModel):
+    body = models.TextField('body', max_length=300, blank=True)
+    user = models.ForeignKey(User, related_name="user_id", on_delete=models.CASCADE,null = True)
+    restaurant = models.ForeignKey(Restaurant,related_name="restaurant_id", on_delete=models.CASCADE,null = True)
+    recipient = models.TextField('recipient')
+
+    def __str__(self):
+        return str(self.id)
