@@ -1,61 +1,54 @@
+import React from 'react'
+import useRestaurant from '../../../src/hooks/useRestaurant'
 import "./footer.css"
 const Footer = () =>{
+    const { restaurants } = useRestaurant()
     return(
         <footer>
             <div className="container">
                 <div className="row">
                 <div className="col-md-4 footer-column">
                     <ul className="nav flex-column">
-                    <li className="nav-item">
-                        <span className="footer-title">Product</span>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Product 1</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Product 2</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Plans & Prices</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Frequently asked questions</a>
-                    </li>
+                        <li className="nav-item">
+                            <span className="footer-title">Restaurantes</span>
+                        </li>
+                        { restaurants.map((restaurant)=>(
+                            <li key={restaurant.id} className="nav-item">
+                                <a className="nav-link" href="#">{restaurant.name}</a>
+                            </li>
+                        )) }
                     </ul>
                 </div>
                 <div className="col-md-4 footer-column">
                     <ul className="nav flex-column">
-                    <li className="nav-item">
-                        <span className="footer-title">Company</span>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">About us</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Job postings</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">News and articles</a>
-                    </li>
+                        <li className="nav-item">
+                            <span className="footer-title">Compañía</span>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">Sobre nosotros</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">Nuestra Historia</a>
+                        </li>
                     </ul>
                 </div>
                 <div className="col-md-4 footer-column">
                     <ul className="nav flex-column">
-                    <li className="nav-item">
-                        <span className="footer-title">Contact & Support</span>
-                    </li>
-                    <li className="nav-item">
-                        <span className="nav-link"><i className="fas fa-phone"></i>+47 45 80 80 80</span>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#"><i className="fas fa-comments"></i>Live chat</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#"><i className="fas fa-envelope"></i>Contact us</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#"><i className="fas fa-star"></i>Give feedback</a>
-                    </li>
+                        <li className="nav-item">
+                            <span className="footer-title">Contacto & Soporte</span>
+                        </li>
+                        <li className="nav-item">
+                            <span className="nav-link"><i className="fas fa-phone"></i>+34 969 69 69 69</span>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#"><i className="fas fa-comments"></i>Live chat</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#"><i className="fas fa-envelope"></i>Contact us</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#"><i className="fas fa-star"></i>Give feedback</a>
+                        </li>
                     </ul>
                 </div>
                 </div>
@@ -64,23 +57,23 @@ const Footer = () =>{
                 
                 <div className="row text-center">
                 <div className="col-md-4 box">
-                    <span className="copyright quick-links">Copyright &copy; Your Website <script>document.write(new Date().getFullYear())</script>
+                    <span className="copyright quick-links">Copyright &copy; Manfy <script>document.write(new Date().getFullYear())</script>
                     </span>
                 </div>
                 <div className="col-md-4 box">
                     <ul className="list-inline social-buttons">
                     <li className="list-inline-item">
-                        <a href="#">
+                        <a href="https://twitter.com/" target="_blank">
                         <i className="fab fa-twitter"></i>
                     </a>
                     </li>
                     <li className="list-inline-item">
-                        <a href="#">
+                        <a href="https://facebook.com/" target="_blank">
                         <i className="fab fa-facebook-f"></i>
                     </a>
                     </li>
                     <li className="list-inline-item">
-                        <a href="#">
+                        <a href="https://www.linkedin.com/" target="_blank">
                         <i className="fab fa-linkedin-in"></i>
                     </a>
                     </li>
