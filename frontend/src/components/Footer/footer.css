@@ -3,17 +3,17 @@ a {
 }
 
 a:hover {
-  color: #fec503;
+  color: #EB5E28;
   text-decoration: none;
 }
 
 ::-moz-selection {
-  background: #fec503;
+  background: #EB5E28;
   text-shadow: none;
 }
 
 ::selection {
-  background: #fec503;
+  background: #EB5E28;
   text-shadow: none;
 }
 
@@ -72,7 +72,7 @@ ul.social-buttons {
 ul.social-buttons li a:active,
 ul.social-buttons li a:focus,
 ul.social-buttons li a:hover {
-  background-color: #fec503;
+  background-color: #EB5E28;
 }
 
 ul.social-buttons li a {

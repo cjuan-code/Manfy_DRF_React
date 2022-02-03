@@ -1,0 +1,12 @@
+nav{
+    background-color: #EB5E28 !important;
+    height: 70px;
+}
+.navbar-brand{
+    font-size: 2rem !important;
+    letter-spacing: 0.4em;
+}
+ul>li>a:hover{
+    cursor: pointer;
+    color: white !important;
+}
