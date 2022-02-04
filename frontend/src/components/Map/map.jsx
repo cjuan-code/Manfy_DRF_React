@@ -15,7 +15,7 @@ const Mapa = () =>{
             style="mapbox://styles/mapbox/streets-v9"
             containerStyle={{
                 height: '100vh',
-                width: '100vw'
+                width: '100%'
             }}
             center={{lon:-0.609989,lat:38.822441}}
             >

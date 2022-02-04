@@ -7,9 +7,12 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 const Home = React.lazy(() => import("./pages/Home/home"))
 const Reservations = React.lazy(() => import("./pages/Reservations/Reservations"))
 
+import Cookies from './components/Cookies/AlertCookies'
+
 function App() {
   return (
     <div className="App">
+        <Cookies/>
         <Navbar/>
         <BrowserRouter>
           <Suspense fallback={<p>Loading...</p>}>
