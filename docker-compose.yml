@@ -34,8 +34,8 @@ services:
   frontend:
     build: ./frontend/
     container_name: reactContainer
-    command: bash -c "npm install && npm start"
-    working_dir: /app/frontend/
+    # command: bash -c "npm install && npm start"
+    # working_dir: /app/frontend/
     volumes:
       - ./frontend/:/app/frontend/
     ports:

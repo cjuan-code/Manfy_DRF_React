@@ -1,0 +1,18 @@
+.container{
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.alert{
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    text-align: left !important;
+}
+.buttons{
+    padding-left: 10%;
+}
+.btn{
+    margin-left: 25px;
+}
