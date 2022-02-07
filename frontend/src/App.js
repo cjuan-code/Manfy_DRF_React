@@ -7,6 +7,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 const Home = React.lazy(() => import("./pages/Home/home"))
 const Reservations = React.lazy(() => import("./pages/Reservations/Reservations"))
+// const Login = React.lazy(()=> import("./pages/"))
 
 function App() {
   return (
