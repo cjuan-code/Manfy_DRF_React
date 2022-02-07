@@ -1,5 +1,5 @@
-const API_URL = "http://127.0.0.1:8005"
+import { secret } from "../secrets"
 
 export const listRestaurant = async () => {
-    return await fetch(API_URL+'/manfy/restaurants')
+    return await fetch(secret.API_URL+'/restaurants')
 }
