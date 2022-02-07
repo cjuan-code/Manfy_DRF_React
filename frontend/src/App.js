@@ -14,7 +14,7 @@ function App() {
         <Cookies/>
         <Navbar/>
         <BrowserRouter>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<h2>Loading...</h2>}>
             <Routes>
               <Route path='/' element={<Home/>}/>
               <Route path='reservations' element={<Reservations/>} />

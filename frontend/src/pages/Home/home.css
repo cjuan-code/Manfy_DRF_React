@@ -78,4 +78,5 @@ button, input[type="submit"], input[type="reset"] {
 #map {
   margin: 0 auto;
   width: 90%;
+  padding-bottom: 2%;
 }
