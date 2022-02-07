@@ -67,7 +67,7 @@ const HomeList = () =>{
                 </section>
             </div>
             <div id="map">
-            <Map/>
+                <Map/>
             </div>
                 
 

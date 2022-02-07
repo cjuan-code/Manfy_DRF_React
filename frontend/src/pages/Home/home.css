@@ -74,3 +74,8 @@ button, input[type="submit"], input[type="reset"] {
 .Img-Info>img{
     height: 100% !important;
 }
+
+#map {
+  margin: 0 auto;
+  width: 90%;
+}
