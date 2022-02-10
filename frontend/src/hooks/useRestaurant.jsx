@@ -9,7 +9,6 @@ export default function useRestaurant(){
     const listRestaurant = useCallback(async ()=>{
         const res = await RestaurantService.listRestaurant();
         const data = await res.json();
-        console.log(data)
         setRestaurants(data)
 
     });

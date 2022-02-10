@@ -10,3 +10,11 @@ ul>li>a:hover{
     cursor: pointer;
     color: white !important;
 }
+.log-menu{
+    position: absolute;
+    min-width: 100px !important;
+}
+.log-menu>li>a:hover{
+    color: #212529 !important;
+    letter-spacing: 2px !important;
+}
