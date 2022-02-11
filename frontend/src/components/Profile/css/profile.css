@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Quicksand:300,400,500,700");
+
+.event_container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 230px;
+  background: #FFF;
+  max-width: 750px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 8px 8px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25), 0 8px 8px 0 rgba(0, 0, 0, 0.15);
+  margin: 20px 0;
+}
+
+.event_container .event_bg {
+  width: 40%;
+  height: 100%;
+  background-image: url("https://www.fife.gov.uk/__data/assets/image/0033/81798/alert_icon.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.event_container .event_info {
+  width: 60%;
+  height: 100%;
+  padding: 10px 20px;
+}
+
+.event_container .event_info .event_title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.event_container .event_info .event_title h4 {
+  font-size: 26px;
+  font-family: 'Quicksand', sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event_container .event_info .event_desc {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: calc(100% - 100px);
+}
+
+.event_container .event_info .event_desc p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #565861;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event_container .event_info .event_footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.event_container .event_info .event_footer .event_date p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+.event_container .event_info .event_footer .event_more {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+  height: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.event_container .event_info .event_footer .event_more a.btn_more {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+  height: 40px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 15px;
+  text-decoration: none;
+  color: #5F5FFC;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 2px;
+  will-change: background;
+  -webkit-transition: background .3s, color .2s ease-in;
+  transition: background .3s, color .2s ease-in;
+}
+
+.event_container .event_info .event_footer .event_more a.btn_more i.material-icons {
+  font-size: 18px;
+  font-weight: 500;
+  padding: 0 2px;
+}
+
+.event_container .event_info .event_footer .event_more a.btn_more:hover {
+  background: #5F5FFC;
+  color: #FFF;
+}
+
+@media screen and (max-width: 575px) {
+  .event_container {
+    width: 100%;
+    height: 480px;
+    background: #FFF;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .event_container .event_bg {
+    width: 100%;
+    height: 250px;
+    min-height: 250px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 0;
+  }
+  .event_container .event_info {
+    width: 100%;
+    height: 230px;
+  }
+}
+/*# sourceMappingURL=profile.css.map */

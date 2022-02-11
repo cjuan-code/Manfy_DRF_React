@@ -1,5 +1,6 @@
 import React from 'react'
 import "../Login/login.css"
+
 const RegisterComponent = () =>{
     return(
         <div className="container-fluid">
@@ -11,7 +12,7 @@ const RegisterComponent = () =>{
 			<div className="col-md-8 col-xs-12 col-sm-12 login_form ">
 				<div className="container-fluid">
 					<div className="row">
-						<h2>Log In</h2>
+						<h2>Register</h2>
 					</div>
 					<div className="row">
 						<form control="" className="form-group">
@@ -22,13 +23,22 @@ const RegisterComponent = () =>{
 								<input type="password" name="password" id="password" className="form__input" placeholder="Password"/>
 							</div>
 							<div className="row">
+								<input type="password" name="password" id="password" className="form__input" placeholder="Password"/>
+							</div>
+							<div className="row">
+								<input type="password" name="password" id="password" className="form__input" placeholder="Password"/>
+							</div>
+							<div className="row">
+								<input type="password" name="password" id="password" className="form__input" placeholder="Password"/>
+							</div>
+							<div className="row">
 								<input type="submit" value="Submit" className="btn log-btn"/>
 							</div>
 						</form>
 					</div>
-					<div className="row">
-						<p className='text'>No tienes cuenta? <a className='btn log-btn'>Registrate Aquí!</a></p>
-					</div>
+					{/* <div className="row">
+						<p className='text'>Ya tienes cuenta? <a className='btn log-btn' onClick={changeLogVal}>Inicia Sesion</a></p>
+					</div> */}
 				</div>
 			</div>
 		</div>

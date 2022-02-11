@@ -9,8 +9,9 @@ from .models import User
 
 class JWTAuthentication(authentication.BaseAuthentication):
     authentication_header_prefix = 'Token'
-
+    
     def authenticate(self, request):
+        
         """
         The `authenticate` method is called on every request, regardless of
         whether the endpoint requires authentication. 
@@ -74,6 +75,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
         Try to authenticate the given credentials. If authentication is
         successful, return the user and token. If not, throw an error.
         """
+
         try:
             payload = jwt.decode(token, settings.SECRET_KEY)
         except:
@@ -89,5 +91,4 @@ class JWTAuthentication(authentication.BaseAuthentication):
         if not user.is_active:
             msg = 'This user has been deactivated.'
             raise exceptions.AuthenticationFailed(msg)
-
         return (user, token)
