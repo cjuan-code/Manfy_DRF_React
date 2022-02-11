@@ -28,6 +28,16 @@ class TableView(viewsets.GenericViewSet):
 
         return Response(serializer, status=status.HTTP_200_OK)
 
+class RestaurantView(viewsets.GenericViewSet):
+
+    def getRestaurant(self, request):
+        serializer_context = {
+            'restaurant_id': request.data['restaurant_id']
+        }
+
+        serializer = restaurantSerializer.getRestaurant(context = serializer_context)
+
+        return Response(serializer, status=status.HTTP_200_OK)
 
 class GetRestaurants(generics.ListAPIView):
     permission_classes = (AllowAny,)

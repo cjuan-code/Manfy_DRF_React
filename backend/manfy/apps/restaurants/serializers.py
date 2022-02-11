@@ -52,10 +52,18 @@ class restaurantSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = ('id','slug','address','name')
 
-    def to_restaurant(self,instance):
+    def to_restaurant(instance):
         return {
             'id' : instance.id,
             'slug' : instance.slug,
-            'adress' : instance.adress,
+            'address' : instance.address,
             'name' : instance.name
         }
+    
+    def getRestaurant(context):
+
+        restaurant = Restaurant.objects.get(id = context['restaurant_id'])
+
+        serialized_restaurant = restaurantSerializer.to_restaurant(restaurant)
+
+        return serialized_restaurant
