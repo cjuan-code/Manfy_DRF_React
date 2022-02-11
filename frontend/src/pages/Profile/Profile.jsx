@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-
+import ProfileComponent from '../../components/Profile/Profile'
 const Profile = ()=>{
 
     return(
-        <div>HOLA Profile</div>
+        <ProfileComponent></ProfileComponent>
     )
 }
 

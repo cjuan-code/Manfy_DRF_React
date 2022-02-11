@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback,useContext } from 'react'
 import * as UserService from '../../src/services/UserServices'
 import * as JwtService from '../services/JwtService'
 import UserContext from "../context/UserContext"
+import { routes } from "../secrets"
 export default function useUser(){
     const { jwt, setJWT } = useContext(UserContext);
     const { user, setUser } = useContext(UserContext);
@@ -21,7 +22,7 @@ export default function useUser(){
         
     },[setJWT]);
     const logout = useCallback(() => {
-        console.log("entra")
+        window.location.href = routes.HOME_URL
         JwtService.destroyToken()
         setUser(null)
         setJWT(null);
