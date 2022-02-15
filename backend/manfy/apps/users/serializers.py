@@ -32,6 +32,31 @@ class userSerializer(serializers.ModelSerializer):
             },
             'token': user.token,
         }
+    def update(context):
+        print("****************SERIALIIIZEEEEEER****************")
+        CurrentUser = context['user']
+        NewEmail = context['email']
+        NewPassword = context['password']
+        NewName = context['name']
+        NewSurname = context['surname']
+        print(len(NewName))
+        if CurrentUser is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+        user = User.objects.get(email=CurrentUser)
+
+        if not user.is_active:
+            raise serializers.ValidationError(
+                'This user has been deactivated.'
+            )
+
+        User.objects.filter(email=CurrentUser).update(
+            first_name = NewName,
+            last_name = NewSurname,
+            email = NewEmail,
+            password = NewPassword
+        )
     def register(context):
 
         email = context['email']

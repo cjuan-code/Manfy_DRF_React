@@ -8,4 +8,5 @@ urlpatterns = [
     path('login', UserView.as_view({'post':'login'})),
     path('register', UserView.as_view({'post':'register'})),
     path('getUser', UserInfo.as_view({'post':'getUser'})),
+    path('update', UserInfo.as_view({'put':'update'})),
 ]

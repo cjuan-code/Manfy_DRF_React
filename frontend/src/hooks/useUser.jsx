@@ -6,10 +6,7 @@ import { routes } from "../secrets"
 export default function useUser(){
     const { jwt, setJWT } = useContext(UserContext);
     const { user, setUser } = useContext(UserContext);
-    // const [user,setUser]=useState([]);
-    // useEffect(()=>{
-    //     login();
-    // },[]);
+
     const login = useCallback(async (data)=>{
         const res = await UserService.login(data);
         const response = await res.json()
@@ -21,6 +18,9 @@ export default function useUser(){
         }
         
     },[setJWT]);
+    const update =useCallback(async (data)=>{
+        console.log(data)
+    })
     const logout = useCallback(() => {
         window.location.href = routes.HOME_URL
         JwtService.destroyToken()
@@ -38,6 +38,7 @@ export default function useUser(){
         isLogged:isLog(),
         login,
         logout,
+        update,
         user:user
     } 
 }
