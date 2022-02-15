@@ -22,3 +22,15 @@ export const getUser = async()=>{
     });
     return res
 }
+export const update = async(data)=>{
+    let res = await fetch(secret.API_URL + "/update",{
+        method:'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": `Token ${JwtService.getToken()}`
+        },
+        body:JSON.stringify(data)
+    });
+    return res
+}

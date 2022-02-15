@@ -57,6 +57,19 @@ class userSerializer(serializers.ModelSerializer):
             email = NewEmail,
             password = NewPassword
         )
+        user = User.objects.get(email=CurrentUser)
+        return{
+            'user': {
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'full_name': user.fullname,
+                'n_incidents': user.n_incidents,
+                'n_coupons': user.n_coupons,
+                'is_active': user.is_active
+            },
+            'token': user.token,
+        }
     def register(context):
 
         email = context['email']

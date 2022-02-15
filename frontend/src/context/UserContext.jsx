@@ -8,7 +8,7 @@ export function UserContext({ children }){
         if(getToken){
             const res = await UserService.getUser()
             const response = await res.json()
-            
+            console.log(response)
             if(response.token && response.user){
                 setJWT(response.token)
                 setUser(response.user)

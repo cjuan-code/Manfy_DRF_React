@@ -19,7 +19,15 @@ export default function useUser(){
         
     },[setJWT]);
     const update =useCallback(async (data)=>{
-        console.log(data)
+        const res = await UserService.update(data);
+        const response = await res.json()
+        if(!response.token){
+            return 404
+        }else{
+            setUser(response.user)
+            setJWT(response.token)
+            JwtService.saveToken(response.token)
+        }
     })
     const logout = useCallback(() => {
         window.location.href = routes.HOME_URL
