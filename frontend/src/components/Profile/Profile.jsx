@@ -1,9 +1,15 @@
 import React, { useEffect, useState,useContext } from 'react'
 import "./css/profilecomp.css"
 import UserContext from "../../context/UserContext"
+import useUser from '../../../src/hooks/useUser'
+import { useForm } from "react-hook-form";
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css'
+
 
 const ProfileComponent = ()=>{
-
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { update } = useUser()
     const { user, setUser } = useContext(UserContext);
     const [isSetting, setSetting] = useState(true)
     const [isIncident, setIncident] = useState(false)
@@ -11,6 +17,43 @@ const ProfileComponent = ()=>{
     useEffect(()=>{
         changeActive()
     })
+    const validate = ()=>{
+        var email = document.getElementById('email').value
+        var password = document.getElementById('password').value
+        if (email.length == 0){
+            var message = "Your email is empty"
+            notify(message)
+        }
+        if (password.length == 0){
+            var message = "Your password is empty"
+            notify(message)
+        }
+    }
+    const handleChange = (event)=>{
+        var value = event.target.value
+        if(value.length == 0){
+            var message = "Your email is empty"
+            notify(message)
+        }
+    }
+    const passwordChange = (event)=>{
+        var value = event.target.value
+        if(value.length == 0){
+            var message = "Your password is empty"
+            notify(message)
+        }
+    }
+    const sumbit = ()=>{
+    }
+    const notify = (message) => {
+        toastr.options = {
+            positionClass : 'toast-bottom-full-width',
+            hideDuration: 300,
+            timeOut: 60000
+        }
+        toastr.clear()
+        setTimeout(() => toastr.error(`${message}`), 300)
+    };
     const changeSettingValue = (value,id)=>{
         var element = document.getElementsByClassName('active')[0]
         element.classList.remove('active')
@@ -109,20 +152,30 @@ const ProfileComponent = ()=>{
                         isSetting
                         ?
                         <div className="container">
-                            <form>
+                            <form control="" className="form-group"  onSubmit={handleSubmit(update)}>
                                 <div className="row">
                                     <div className="col-md-6">
                                         <div className="form-group">
-                                        <label for="first">Nombre</label>
-                                        <input type="text" className="form-control" placeholder="Nombre" id="name"/>
+                                        <label htmlFor="first">Nombre</label>
+                                        <input type="text" className="form-control" defaultValue={user['first_name']} placeholder="Nombre" id="name" {...register("first_name",{
+                                            pattern:{
+                                                value:/^[A-Z][a-z]+$/,
+                                                message:"Your Name has a incorrect form"
+                                            }
+                                            })}/>
                                         </div>
                                     </div>
 
 
                                     <div className="col-md-6">
                                         <div className="form-group">
-                                        <label for="last">Apellidos</label>
-                                        <input type="text" className="form-control" placeholder="Apellidos" id="surname"/>
+                                        <label htmlFor="last">Apellidos</label>
+                                        <input type="text" className="form-control" defaultValue={user['last_name']} placeholder="Apellidos" id="surname" {...register("last_name",{
+                                            pattern:{
+                                                value:/^[A-Z][a-z]+$/,
+                                                message:"Your Surname has a incorrect form"
+                                            }
+                                            })}/>
                                         </div>
                                     </div>
 
@@ -132,8 +185,17 @@ const ProfileComponent = ()=>{
                                 <div className="row last-row">
                                     <div className="col-md-6">
                                         <div className="form-group">
-                                            <label for="email">Correo Electrónico</label>
-                                            <input type="email" className="form-control" id="email" placeholder="Correo Electrónico"/>
+                                            <label htmlFor="email">Correo Electrónico</label>
+                                            <input type="email" className="form-control" defaultValue={user['email']} id="email" contentEditable={true} placeholder="Correo Electrónico" {...register("email",{
+                                            required:notify,
+                                            pattern:{
+                                                value:/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                                message:"Your email has a incorrect form"
+                                            }
+                                            })} onChange={handleChange}/>
+                                            {errors.email &&(
+									            <p className="errorForm">{errors.email.message}</p>
+								            )}
                                         </div>
                                     </div>
 
@@ -141,21 +203,30 @@ const ProfileComponent = ()=>{
                                     <div className="col-md-6">
 
                                         <div className="form-group">
-                                            <label for="phone">Contraseña</label>
-                                            <input type="password" className="form-control" id="password" placeholder="Password"/>
+                                            <label htmlFor="phone">Contraseña</label>
+                                            <input type="password" className="form-control" id="password" placeholder="Password" {...register("password",{
+                                            required:notify,
+                                            minLength:{
+                                                value:4,
+                                                message:"The password must have more than 4 characters"
+                                            }
+								             })} onChange={passwordChange}/>
+                                            {errors.password &&(
+                                                <p className="errorForm">{errors.password.message}</p>
+                                            )} 
                                         </div>
                                     </div>
 
                                 </div>
 
-                                <button type="submit" className="btn btn-settings">Enviar</button>
+                                <button type="submit" className="btn btn-settings" onClick={validate}>Enviar</button>
                             </form>
                         </div>
                         :
                         isIncident
                         ?
                         <div>
-                                                 <div class="event_container">
+                            <div class="event_container">
                             <div class="event_bg"></div>
                             <div class="event_info">
                                 <div class="event_title">

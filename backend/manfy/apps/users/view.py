@@ -33,6 +33,20 @@ class UserInfo(viewsets.GenericViewSet):
         }
         serializer = userSerializer.getUser(context = serializer_context)
         return Response(serializer, content_type="application/json")
+    def update(self,request):
+        print("****************VIEEEEEWWWWWW****************")
+        print(request.data)
+        current_user = request.user
+        serializer_context = {
+            'user': current_user,
+            'email':request.data['email'],
+            'password':request.data['password'],
+            'name':request.data['first_name'],
+            'surname':request.data['last_name'],
+        }
+        serializer = userSerializer.update(context = serializer_context)
+        return Response(serializer,content_type="application/json")
+
 class UserView(viewsets.GenericViewSet):
     permission_classes = (AllowAny,)
     serializer_class = userSerializer

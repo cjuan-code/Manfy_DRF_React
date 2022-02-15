@@ -218,6 +218,7 @@ button.createbtn {
   border-radius: 3px;
   background: #EB5E28;
   color: #fff;
+  letter-spacing: 5px;
   font-family: "Bree Serif";
   font-size: 1rem;
   margin: 5px 2px;
@@ -230,7 +231,8 @@ button.createbtn {
 
 button.chatbtn:hover,
 button.createbtn:hover {
-  background: rgba(288, 0, 70, 0.9);
+  background: #ff6b3077;
+  letter-spacing: 3px;
 }
 
 button.chatbtn i,
@@ -354,9 +356,6 @@ button.createbtn i {
 @media (max-width: 400px) {
   body {
     margin: 0 ;
-  }
-
-  .profile-header h3 {
   }
 
   .profile-option {
