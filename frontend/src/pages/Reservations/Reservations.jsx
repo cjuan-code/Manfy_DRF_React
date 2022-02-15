@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { createRef, Suspense, useEffect, useState } from "react";
 import { useRestaurantByID } from "../../hooks/useRestaurant";
 import "./reservations.css"
 
@@ -7,15 +7,23 @@ import { DatePicker, Picklist, Option } from 'react-rainbow-components';
 
 const Reservations = () => {
 
+    const filter_button = createRef();
+
+    // filter_button.current.disabled = true;
+
     const containerStyles = {
         width: '90%',
     };
 
-    const [turn, setTurn] = useState('turn');
+    const [filtering, setFiltering] = useState(false);
+
+    const [turn, setTurn] = useState('-- Seleccione turno --');
 
     const [hours, setHours] = useState([]);
 
     const [selectedHour, setSelectedHour] = useState();
+
+    const [reservationDate, setDate] = useState(new Date());
 
     const restaurant_id = localStorage.getItem('restaurant_id');
 
@@ -36,9 +44,46 @@ const Reservations = () => {
 
     }, [turn, setTurn])
 
-    const [reservationDate, setDate] = useState(new Date());
+    useEffect(() => {
 
+        var now = new Date();
+
+        var nowDay = now.getDate()
+        var nowMonth = now.getMonth()+1
+        var nowYear = now.getFullYear()
+
+        var newNow = new Date(nowYear, nowMonth, nowDay)
+
+        var resDay = reservationDate.getDate()
+        var resMonth = reservationDate.getMonth()+1
+        var resYear = reservationDate.getFullYear()
+
+        var newRes = new Date(resYear, resMonth, resDay)
+
+        if (filter_button.current) {
+
+            if (!selectedHour || selectedHour.label === '-- Seleccione hora --') {
+                filter_button.current.classList.add('disabled');
+            } else if (newNow.valueOf() > newRes.valueOf()) {
+                filter_button.current.classList.add('disabled');
+            } else {
+                filter_button.current.classList.remove('disabled');
+            }
+
+        }
+
+    }, [reservationDate, setDate, selectedHour, setSelectedHour, turn, setTurn])
+
+    const filter = () => {
+        setFiltering(true)
+    }
+
+    const setFilterFalse = (value) => {
+        setFiltering(value)
+    }
+    
     if (restaurant.restaurant) {
+
         return (
             <main>
 
@@ -85,13 +130,13 @@ const Reservations = () => {
                                 ))}
                             </Picklist>
 
-                            <button className="btn btn-dark item">Filtrar</button>
+                            <button ref={ filter_button } className="btn btn-dark item disabled" onClick={filter}>Filtrar</button>
                         </div>
                     </div>
                     <div className="tableList col-9">
-                        <ListTables/>
+                        <ListTables filters={{date: reservationDate, hour: selectedHour, filtering: filtering}} changeFilter={setFilterFalse}/>
                     </div>
-                        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                        {/* <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> */}
                 </div>
             </main>
         )

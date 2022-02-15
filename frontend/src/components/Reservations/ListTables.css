@@ -17,10 +17,13 @@
 
 .square {
     width: 300%;
-    height: 15%;
+    height: 14%;
     position: absolute;
     bottom: 0;
     transform: rotate(-45deg);
-    left: -60%;
+    left: -58%;
+}
+
+.square-border {    
     border: 3px solid black;
 }

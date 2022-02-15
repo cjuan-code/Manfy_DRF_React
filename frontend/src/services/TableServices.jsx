@@ -11,5 +11,11 @@ export const listTablesByRestaurant = async (data) => {
 }
 
 export const listFreeTablesByRestaurant = async (data) => {
-    return await fetch(secret.API_URL+'/')
+    return await fetch(secret.API_URL+'/tables/getfreetablesbyrestaurant', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
 }
