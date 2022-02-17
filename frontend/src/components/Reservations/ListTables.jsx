@@ -141,12 +141,12 @@ const ListTables = (props) => {
                 <div className='container-list row'>
                     <h2>Mesas</h2>
                     { tables.tables.map((table)=> (
-                        <div key={table.id} className="card-tables d-flex flex-wrap p-1 mr-3 mb-3 justify-content-center">
+                        <div key={table.id} className="card-tables d-flex flex-wrap p-3 mr-3 mb-3 justify-content-center">
                             <div className="card p-2 card-reser">
                                 <img alt="" src="https://www.ikea.com/global/assets/navigation/images/dining-sets-19145.jpeg?imwidth=300"/>
                                 <h5 className="reser_descrip pt-2">Mesa {table.id}</h5>
                                 <p className='reser_descrip pb-2'>Plazas: {table.capacity} <i className="fas fa-user"></i></p>
-                                <button id={table.id+"_button"} className='card_btn btn btn-dark disabled' data-bs-toggle="modal" data-bs-target="#ConfirmReservationModal" onClick={setClicked}>Reservar</button>
+                                <button id={table.id+"_button"} className='card_btn btn btn-dark mb-1 disabled' data-bs-toggle="modal" data-bs-target="#ConfirmReservationModal" onClick={setClicked}>Reservar</button>
                                 <div id={table.id} className='square'></div>
                             </div>
                         </div>
