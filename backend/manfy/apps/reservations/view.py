@@ -11,12 +11,12 @@ class ReservationView(mixins.DestroyModelMixin,viewsets.GenericViewSet):
 
     def create(self, request):
         serializer_context = {
-            'user_id': request.data['user_id'],
+            'user_email': request.user,
             'restaurant_id': request.data['restaurant_id'],
             'table_id': request.data['table_id'],
             'request': request
         }
-        
+
         serializer_data = request.data
 
         serializer = self.serializer_class(

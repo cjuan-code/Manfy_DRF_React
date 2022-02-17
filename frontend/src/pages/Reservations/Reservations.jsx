@@ -9,8 +9,6 @@ const Reservations = () => {
 
     const filter_button = createRef();
 
-    // filter_button.current.disabled = true;
-
     const containerStyles = {
         width: '90%',
     };
@@ -28,6 +26,11 @@ const Reservations = () => {
     const restaurant_id = localStorage.getItem('restaurant_id');
 
     const restaurant = useRestaurantByID(restaurant_id);
+
+    useEffect(() => {
+        setTurn({label: '-- Seleccione turno --', name: 'option 0', icon: null, value: undefined})
+        setSelectedHour({label: '-- Seleccione hora --', name: 'option 0', icon: null, value: undefined});
+    }, [reservationDate, setDate])
 
     useEffect(() => {
 
@@ -52,13 +55,16 @@ const Reservations = () => {
         var nowMonth = now.getMonth()+1
         var nowYear = now.getFullYear()
 
-        var newNow = new Date(nowYear, nowMonth, nowDay)
+        var newNow = new Date(nowYear, nowMonth, nowDay, now.getHours(), now.getMinutes())
 
         var resDay = reservationDate.getDate()
         var resMonth = reservationDate.getMonth()+1
         var resYear = reservationDate.getFullYear()
 
-        var newRes = new Date(resYear, resMonth, resDay)
+        if (selectedHour) {
+            var splittedHour = selectedHour.label.split(':')
+            var newRes = new Date(resYear, resMonth, resDay, splittedHour[0], splittedHour[1])
+        }
 
         if (filter_button.current) {
 
@@ -88,7 +94,7 @@ const Reservations = () => {
             <main>
 
                 <div className="row col-12 resImg" style={{background: "url(https://www.cocinayvino.com/wp-content/uploads/2019/06/CocinaYVino_TAPAS_PorAndreinaContreras_IMG_4544-1200x675.jpg) no-repeat center center", backgroundSize: 'cover'}}>
-                    <h2 className="title">{restaurant.restaurant.name}</h2>
+                    <h2 className="reser_title">{restaurant.restaurant.name}</h2>
                 </div>
 
                 <div className="row">
@@ -98,7 +104,6 @@ const Reservations = () => {
                             <DatePicker
                                 value={reservationDate}
                                 onChange={value => setDate(value)}
-                                // label="Fecha de reserva"
                                 formatStyle="large"
                                 className="item"
                             />
@@ -126,7 +131,7 @@ const Reservations = () => {
                             >  
                                 <Option name="option 0" label="-- Seleccione hora --"/>
                                 {hours.map((hour, index) => (
-                                    <Option name={"option " + index} label={hour}/>
+                                    <Option key={index} name={"option " + index} label={hour}/>
                                 ))}
                             </Picklist>
 

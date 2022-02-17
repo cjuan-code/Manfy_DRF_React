@@ -2,16 +2,42 @@
     max-width: 33%;
 }
 
+.card-reser img {
+    height: 60%;
+}
+
+.card_btn {
+    margin: 0 auto;
+    width: 95%;
+}
+
+.reser_title {
+    color: white;
+    margin: auto;
+}
+
+.reser_descrip { 
+    color: black;
+}
+
 .card {
     overflow: hidden;
     /* border: 2.5px solid black; */
 }
 
 .free {
+    background:
+    radial-gradient(circle at 0% 50%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px) 0px 10px,
+    radial-gradient(at 100% 100%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px);
+    background-size: 20px 20px;
     background-color: #1cff45;
 }
 
 .non-free {
+    background:
+    radial-gradient(circle at 0% 50%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px) 0px 10px,
+    radial-gradient(at 100% 100%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px);
+    background-size: 20px 20px;
     background-color: #ff5855;
 }
 
