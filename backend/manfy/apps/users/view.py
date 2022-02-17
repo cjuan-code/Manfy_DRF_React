@@ -7,22 +7,34 @@ from rest_framework import generics, mixins, status, viewsets
 from rest_framework.permissions import (AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser,)
 
 class IncidentView(viewsets.GenericViewSet):
-    # permission_classes = (IsAuthenticated)
     serializer_class = incidentSerializer
     def create(self,request):
-        serializer_context = {
-            'restaurant_id':request.data['restaurant_id'],
-            'user_id':request.data['user_id'],
-            'request': request
-        }
-        serializer_data = request.data
-        serializer = self.serializer_class(
-            data=serializer_data, context=serializer_context
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        print("*******************************")
+        print(request.data['body'])
+        if request.data['restaurant_id']:
+            serializer_context = {
+                'restaurant_id':request.data['restaurant_id'],
+                'user':request.user,
+                'body':request.data['body'],
+                'recipient':request.data['destinatario'],
+                'type':'User',
+                'request': request
+            } 
+        else:
+            serializer_context = {
+                'user':request.user,
+                'user_id':request.data['user_id'],
+                'body':request.data['body'],
+                'recipient':request.data['destinatario'],
+                'type':'Restaurante',
+                'request': request
+            } 
+        # serializer_data = request.data
+        serializer = incidentSerializer.create(context=serializer_context)
+        # serializer.is_valid(raise_exception=True)
+        # serializer.save()
         
-        return Response(serializer.data, status=status.HTTP_201_CREATED)  
+        return Response(serializer, status=status.HTTP_201_CREATED)  
     def getIncident(self,request):
         serializer_context={
             'user':request.user
@@ -32,7 +44,7 @@ class IncidentView(viewsets.GenericViewSet):
 
 
 class UserInfo(viewsets.GenericViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     def getUser(self,request):
         current_user = request.user
         serializer_context = {

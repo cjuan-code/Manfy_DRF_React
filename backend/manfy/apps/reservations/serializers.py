@@ -3,6 +3,22 @@ from pyexpat import model
 from rest_framework import serializers
 from .models import Reservation, Notification
 from ..users.models import User
+
+class NotifySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ('estimated_hour','reservation_id','user_id')
+    
+    def countNotify(context):
+        user = context['user']
+        if user is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+        notify = Notification.objects.filter(user_id=user.id).count()
+
+        return notify
+        
 class ReservationSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -29,6 +45,34 @@ class ReservationSerializer(serializers.ModelSerializer):
             "first_name":instance.first_name,
             "last_name":instance.last_name
         }
+    def to_userReservation(instance):
+        return{
+            "id":instance.id, 
+            "first_name":instance.first_name,
+            "last_name":instance.last_name,
+            "email":instance.email
+        }
+    def getUserReservation(context):
+        user = context['user']
+        if user is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+        user = User.objects.get(email=user)
+        if not user.is_active:
+            raise serializers.ValidationError(
+                'This user has been deactivated.'
+            )
+        if not user.restaurant_id:
+            raise serializers.ValidationError(
+                'This user is not restaurant admin'
+            )
+        usersReservation = Reservation.objects.raw("SELECT u.id,u.first_name, u.last_name,u.email from reservations_reservation r inner join users_user u on r.user_id = u.id  where r.restaurant_id = "+str(user.restaurant_id))
+        serialized_user = []
+        for user in usersReservation.iterator():
+            fields = ReservationSerializer.to_userReservation(user)
+            serialized_user.append(fields)
+        return serialized_user
 
     def create(self, validate_data):
         user_id = self.context['user_id']

@@ -66,8 +66,8 @@ class userSerializer(serializers.ModelSerializer):
                 'n_incidents': user.n_incidents,
                 'n_coupons': user.n_coupons,
                 'is_active': user.is_active,
-                'role':user.role,
-                'type':user.type
+                'role':user.role, 
+                'types':user.types
             },
             'token': user.token,
         }
@@ -107,7 +107,7 @@ class userSerializer(serializers.ModelSerializer):
                 'n_coupons': user.n_coupons,
                 'is_active': user.is_active,
                 'role':user.role,
-                'type':user.type
+                'types':user.types
             },
             'token': user.token,
         }
@@ -126,6 +126,7 @@ class userSerializer(serializers.ModelSerializer):
             )
 
         user = User.objects.get(email=email)
+
         
         if user is None:
             raise serializers.ValidationError(
@@ -148,7 +149,7 @@ class userSerializer(serializers.ModelSerializer):
                 'n_coupons': user.n_coupons,
                 'is_active': user.is_active,
                 'role':user.role,
-                'type':user.type
+                'types':user.types
             },
             'token': user.token
         }
@@ -180,15 +181,50 @@ class incidentSerializer(serializers.ModelSerializer):
             'user_id':instance.user_id,
             'name':instance.name
         }
-    
-    def create(self,validate_data):
-        restaurant_id = self.context['restaurant_id']
-        user_id = self.context['user_id']
-        incident = Incident.objects.create(
-            restaurant_id = restaurant_id , 
-            user_id = user_id,
-            **validate_data)
-        return incident
+    def to_incident(instance):
+        return{
+            'id':instance.id,
+            'body':instance.body,
+            'restaurant_id':instance.restaurant_id,
+            'user_id':instance.user_id
+        }
+    def create(context):
+        tipo = context['type']
+        user = context['user']
+        if user is None:
+            raise serializers.ValidationError(
+                'User is not find'
+            )
+        user = User.objects.get(email=user)
+        if not user.is_active:
+            raise serializers.ValidationError(
+                'This user has been deactivated.'
+            )
+        if tipo == 'User':
+            incident = Incident.objects.create(
+                restaurant_id = context['restaurant_id'],
+                user_id = user.id,
+                body = context['body'],
+                recipient = context['recipient']
+            )
+        else:
+            incident = Incident.objects.create(
+                restaurant_id = user.restaurant_id,
+                user_id = context['user_id'],
+                body = context['body'],
+                recipient = context['recipient']
+            )
+        incident2 = incidentSerializer.to_incident(incident)
+        print("***********SERIALIZER**************")
+        print(incident2) 
+        return incident2
+        # restaurant_id = self.context['restaurant_id']
+        # user_id = self.context['user_id']
+        # incident = Incident.objects.create(
+        #     restaurant_id = restaurant_id , 
+        #     user_id = user_id,
+        #     **validate_data)
+        # return incident
     def read(context):
         user = context['user']
         if user is None:

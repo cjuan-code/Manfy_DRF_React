@@ -12,3 +12,15 @@ export const getIncident = async()=>{
     });
     return res
 }
+export const createIncident = async(data)=>{
+    let res = await fetch(secret.API_URL + "/user/incident",{
+        method:'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": `Token ${JwtService.getToken()}`
+        },
+        body:JSON.stringify(data)
+    });
+    return res
+}
