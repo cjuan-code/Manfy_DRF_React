@@ -50,6 +50,13 @@ class ReservationSerializer(serializers.ModelSerializer):
             **validate_data
         )
 
+        if reservation:
+            notification = Notification.objects.create(
+                estimated_hour = reservation.hour,
+                reservation_id = reservation.id,
+                user_id = reservation.user_id
+            )
+
         return reservation
     def read(context):
         user = context['user']
