@@ -14,7 +14,6 @@ const Navbar = () =>{
             var fstName = user['first_name'].charAt(0)
             var fstLastName = user['last_name'].charAt(0)
             initials = fstName+fstLastName
-            console.log(initials)
         }
     }
     return(

@@ -5,8 +5,33 @@
 .right-side{
   min-width: 72%;
 }
+
 /*********************INCIDENT***************/
 @import url("./profile.css");
+
+/*********************RESERVATION***************/
+.reser{
+  min-width: 108% !important;
+}
+.reser > table > tbody > tr:hover{
+  cursor: pointer;
+  background-color: #f8956d;
+}
+
+/*********************MODAL****************/
+.modal-header{
+  background-color: #f8956d;
+}
+.modal-body .delete{
+  background-color: #f8956d;
+  border-color: #f8956d;
+  color: #212529;
+}
+.modal-body .close{
+  background-color: #212529;
+  border-color: #212529;
+  color: white;
+}
 /*********************CUPONS****************/
 .card {
 	width: 300px;

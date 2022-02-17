@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import useUser from '../../../src/hooks/useUser'
 import "./login.css"
 import { routes } from "../../secrets"
-
 const LoginComponent = () =>{
 	const { register, handleSubmit, watch, formState: { errors } } = useForm();
 	const { login ,user, isLogged } = useUser()
+
 	if(user != undefined){
 		const size = Object.keys(user).length
 		if(size > 0){
