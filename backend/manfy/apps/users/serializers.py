@@ -215,16 +215,7 @@ class incidentSerializer(serializers.ModelSerializer):
                 recipient = context['recipient']
             )
         incident2 = incidentSerializer.to_incident(incident)
-        print("***********SERIALIZER**************")
-        print(incident2) 
         return incident2
-        # restaurant_id = self.context['restaurant_id']
-        # user_id = self.context['user_id']
-        # incident = Incident.objects.create(
-        #     restaurant_id = restaurant_id , 
-        #     user_id = user_id,
-        #     **validate_data)
-        # return incident
     def read(context):
         user = context['user']
         if user is None:
@@ -238,12 +229,12 @@ class incidentSerializer(serializers.ModelSerializer):
             )
         serialized_incidents = []
         if user.role == 'Usuario':
-            incidents = Incident.objects.raw("Select i.*,r.name from users_incident i inner join restaurants_restaurant r on i.restaurant_id = r.id where i.user_id ="+str(user.id))
+            incidents = Incident.objects.raw("Select i.*,r.name from users_incident i inner join restaurants_restaurant r on i.restaurant_id = r.id where i.user_id ="+str(user.id)+" AND recipient = 'Usuario'")
             for incident in incidents.iterator():
                 fields = incidentSerializer.to_incidentRestaurant(incident)
                 serialized_incidents.append(fields)
         else:
-            incidents = Incident.objects.raw("Select i.*, u.first_name, u.last_name from users_incident i inner join users_user u on i.user_id = u.id where i.user_id = "+str(user.id))
+            incidents = Incident.objects.raw("Select i.*, u.first_name, u.last_name from users_incident i inner join users_user u on i.user_id = u.id where i.restaurant_id = "+str(user.id)+" AND recipient = 'Restaurante'")
             for incident in incidents.iterator():
                 fields = incidentSerializer.to_incident(incident)
                 serialized_incidents.append(fields)
