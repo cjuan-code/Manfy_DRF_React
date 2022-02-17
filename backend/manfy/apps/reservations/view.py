@@ -4,8 +4,11 @@ from rest_framework.exceptions import NotFound
 from rest_framework import generics, mixins, status, viewsets
 from rest_framework.response import Response 
 from .models import Reservation
+from rest_framework.permissions import (IsAuthenticated)
 
 class ReservationView(mixins.DestroyModelMixin,viewsets.GenericViewSet):
+
+    permission_classes = [IsAuthenticated]
 
     serializer_class = ReservationSerializer
 

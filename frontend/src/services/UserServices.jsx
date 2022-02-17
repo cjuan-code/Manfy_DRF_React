@@ -1,5 +1,18 @@
 import { secret } from "../secrets"
 import * as JwtService from "./JwtService"
+
+export const register = async (data) => {
+
+    return await fetch(secret.API_URL + "/register",{
+        method:'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+}
+
 export const login = async (data) => {
     let res = await fetch(secret.API_URL + "/login",{
         method:'POST',

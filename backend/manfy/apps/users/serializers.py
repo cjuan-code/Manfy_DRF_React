@@ -94,7 +94,9 @@ class userSerializer(serializers.ModelSerializer):
                 last_name = last_name,
                 n_incidents = 0,
                 n_coupons = 0,
-                is_active = True
+                is_active = True,
+                role = 'Usuario',
+                types = 'User'
             )
             
         return {

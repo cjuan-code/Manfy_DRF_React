@@ -9,6 +9,18 @@ export default function useUser(){
     const { user, setUser } = useContext(UserContext);
 	const navigate = useNavigate()
 
+    const registerUser = useCallback(async (data) => {
+        const res = await UserService.register(data);
+        const response = await res.json();
+
+        console.log(response, 'response')
+
+        if (response.token) {
+            setUser(response)
+            JwtService.saveToken(response.token)  
+        }
+    }, [setJWT])
+
     const login = useCallback(async (data)=>{
         const res = await UserService.login(data);
         const response = await res.json()
@@ -48,6 +60,7 @@ export default function useUser(){
     }
     return {
         isLogged:isLog(),
+        registerUser,
         login,
         logout,
         update,
