@@ -22,7 +22,14 @@ class IncidentView(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         
-        return Response(serializer.data, status=status.HTTP_201_CREATED)   
+        return Response(serializer.data, status=status.HTTP_201_CREATED)  
+    def getIncident(self,request):
+        serializer_context={
+            'user':request.user
+        }
+        serializer = incidentSerializer.read(context=serializer_context)
+        return Response(serializer,content_type="application/json")
+
 
 class UserInfo(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
@@ -34,8 +41,6 @@ class UserInfo(viewsets.GenericViewSet):
         serializer = userSerializer.getUser(context = serializer_context)
         return Response(serializer, content_type="application/json")
     def update(self,request):
-        print("****************VIEEEEEWWWWWW****************")
-        print(request.data)
         current_user = request.user
         serializer_context = {
             'user': current_user,

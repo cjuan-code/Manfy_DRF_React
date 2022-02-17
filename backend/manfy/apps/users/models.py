@@ -15,11 +15,14 @@ class User(AbstractBaseUser, TimestampedModel):
     n_incidents = models.IntegerField('n_incidents', default=0)
     n_coupons = models.IntegerField('n_coupons', default=0)
     is_active = models.BooleanField('active', default=True)
+    role = models.CharField('role',max_length=15,blank=True)
+    restaurant = models.ForeignKey(Restaurant,related_name="restaurant", on_delete=models.CASCADE,null = True)
+    types = models.CharField('type',max_length=10,blank=True)
 
     # objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', 'n_incidents', 'n_coupons', 'active']
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', 'n_incidents', 'n_coupons', 'active','role','type']
 
     class Meta:
         verbose_name = 'user'

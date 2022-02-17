@@ -38,3 +38,10 @@ class ReservationView(mixins.DestroyModelMixin,viewsets.GenericViewSet):
             raise NotFound('A article with this id does not exist.')
         reservation.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
+    
+    def read(self,request):
+        serializer_context={
+            'user':request.user
+        }
+        serializer = ReservationSerializer.read(context=serializer_context)
+        return Response(serializer,content_type="application/json")

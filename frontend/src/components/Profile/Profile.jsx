@@ -2,8 +2,11 @@ import React, { useEffect, useState,useContext } from 'react'
 import "./css/profilecomp.css"
 import UserContext from "../../context/UserContext"
 import useUser from '../../../src/hooks/useUser'
+import useIncidents from '../../hooks/useIncidents'
+import useReservation from '../../hooks/useReservation'
 import { useForm } from "react-hook-form";
 import toastr from 'toastr';
+import { routes } from "../../secrets"
 import 'toastr/build/toastr.min.css'
 
 
@@ -11,12 +14,26 @@ const ProfileComponent = ()=>{
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const { update } = useUser()
     const { user, setUser } = useContext(UserContext);
+    const { jwt , setJWT } =useContext(UserContext)
     const [isSetting, setSetting] = useState(true)
     const [isIncident, setIncident] = useState(false)
     const [isReservation, setReservation] = useState(false)
-    useEffect(()=>{
-        changeActive()
-    })
+    const {incident ,getIncident } = useIncidents()
+    const {reservation,ReadReservation} = useReservation()
+    const [ id, setId ] =useState(null)
+    
+    
+    var myArray = []
+
+    for(var i = 0; i< user.n_coupons;i++){
+        myArray.push(i)
+    }
+    const deleteReservation = (id) =>{
+        console.log(id)
+    }
+    const modal = (id)=>{
+        setId(id)
+    }
     const validate = ()=>{
         var email = document.getElementById('email').value
         var password = document.getElementById('password').value
@@ -42,8 +59,6 @@ const ProfileComponent = ()=>{
             var message = "Your password is empty"
             notify(message)
         }
-    }
-    const sumbit = ()=>{
     }
     const notify = (message) => {
         toastr.options = {
@@ -91,10 +106,7 @@ const ProfileComponent = ()=>{
         setIncident(value)
     }
 
-    const changeActive = ()=>{
-        var element = document.getElementsByClassName('active')[0]
-        
-    }
+
     return(
         <div className="container">
             <div className="profile-header">
@@ -226,56 +238,96 @@ const ProfileComponent = ()=>{
                         isIncident
                         ?
                         <div>
-                            <div class="event_container">
-                            <div class="event_bg"></div>
-                            <div class="event_info">
-                                <div class="event_title">
-                                    <h4>Recibido por</h4>
-                                </div>
-                                <div class="event_desc">
-                                    <p>Aquí va el body de la incidencia</p>
-                                </div>
-                                <div class="event_footer">
-                                    <div class="event_date">
-                                        <p>Fecha de created_At</p>
+                            {incident.map((incident)=>(
+                                <div className="event_container" key={incident.id}>
+                                    <div className="event_bg"></div>
+                                    <div className="event_info">
+                                        <div className="event_title">
+                                            {
+                                            incident.first_name
+                                            ?
+                                            <h4>Recibido por {incident.first_name} {incident.last_name}</h4>
+                                            :
+                                            <h4>Recibido por {incident.name}</h4>
+                                            }
+                                        </div>
+                                        <div className="event_desc">
+                                            <p>{incident.body}</p>
+                                        </div>
+                                        <div className="event_footer">
+                                            <div className="event_date">
+                                                <p>{incident.created_at}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="event_container">
-                            <div class="event_bg"></div>
-                            <div class="event_info">
-                                <div class="event_title">
-                                    <h4>Recibido por</h4>
-                                </div>
-                                <div class="event_desc">
-                                    <p>Aquí va el body de la incidencia</p>
-                                </div>
-                                <div class="event_footer">
-                                    <div class="event_date">
-                                        <p>Fecha de created_At</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>   
+                            ))}  
                         </div>
                         :
                         isReservation
                         ?
-                        <div>Hola Reservation</div>
-                        :
-                        <div className="d-flex justify-content-between flex-wrap align-items-center container">
-                            <div className="d-flex card text-center">
-                                <div className="image">
-                                    <img src="https://i.imgur.com/DC94rZe.png" width="150"/>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col reser">
+                                    <table className="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Identificador</th>
+                                                <th>Dia</th>
+                                                <th>Hora</th>
+                                                {
+                                                  (user.role == 'Usuario')
+                                                  ?
+                                                  <th>Restaurante</th>
+                                                  :
+                                                  <th>Usuario</th>  
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                reservation.map((reser)=>(
+                                                    reser.name
+                                                    ?
+                                                    <tr key={reser.id} onClick={(e)=>modal(reser.id)} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        <td>{reser.id}</td>
+                                                        <td>{reser.day}</td>
+                                                        <td>{reser.hour}</td>
+                                                        <td>
+                                                        <i className="fas fa-utensils"></i>
+                                                            {reser.name}
+                                                        </td>
+                                                    </tr>
+                                                    :
+                                                    <tr key={reser.id}>
+                                                        <td>{reser.id}</td>
+                                                        <td>{reser.day}</td>
+                                                        <td>{reser.hour}</td>
+                                                        <td>{reser.first_name} {reser.last_name}</td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div className="image2">
-                                    <img src="https://i.imgur.com/DC94rZe.png" width="150"/>
-                                </div>
-                                <h1>10% OFF</h1><span className="d-block">En todos los restaurantes</span><span className="d-block">Caduca en 15 días</span>
-                                <div className="mt-4"><small>Con el codigo : manfy2022-rest</small></div>
                             </div>
                         </div>
+                        :
+                        <div className="d-flex justify-content-between flex-wrap align-items-center container">
+                            {myArray.map((num)=>(
+                                <div className="d-flex card text-center" key={num}>
+                                    <div className="image">
+                                        <img src="https://i.imgur.com/DC94rZe.png" width="150"/>
+                                    </div>
+                                    <div className="image2">
+                                        <img src="https://i.imgur.com/DC94rZe.png" width="150"/>
+                                    </div>
+                                    <h1>10% OFF</h1><span className="d-block">En todos los restaurantes</span><span className="d-block">Caduca en 15 días</span>
+                                    <div className="mt-4"><small>Con el codigo : manfy2022-rest</small></div>
+                                </div>
+                            ))}
+                        </div>
+                        
                     }
 
                     <div className="profile-body">
@@ -305,7 +357,26 @@ const ProfileComponent = ()=>{
                     </div>
                 </div>
             </div>
+            {/* ********MODAL******* */}
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                <div className="modal-header text-center">
+                    <h5 className="modal-title" id="exampleModalLabel">Eliminar Reserva</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                    ¿Esta usted seguro de eliminar la reserva con el identificador {id}?
+                </div>
+                <div className='modal-body'>
+                    <button type="button" className="btn btn-secondary close" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" className="btn btn-primary delete" onClick={(e)=>deleteReservation(id)} data-bs-dismiss="modal">Eliminar</button>
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
+        
     )
 }
 

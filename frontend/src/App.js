@@ -15,9 +15,14 @@ function App() {
   return (
     <div className="App">
         <Cookies/>
-        <UserContext>
           <BrowserRouter>
-            <Suspense fallback={<p>Loading...</p>}>
+            <UserContext>
+            <Suspense fallback={
+              <div className="d-flex justify-content-center m-5">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>}>
               <Navbar/>
               <Routes>
                 <Route exact path='/' element={<Home/>}/>
@@ -26,9 +31,10 @@ function App() {
                 <Route exact path='profile' element={<Profile/>}/>
               </Routes>
             </Suspense>
+            <Footer/>
+            </UserContext>
           </BrowserRouter>
-          <Footer/>
-        </UserContext>
+
     </div>
   );
 }

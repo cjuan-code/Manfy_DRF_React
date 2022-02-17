@@ -3,9 +3,11 @@ import * as UserService from '../../src/services/UserServices'
 import * as JwtService from '../services/JwtService'
 import UserContext from "../context/UserContext"
 import { routes } from "../secrets"
+import { useNavigate } from "react-router-dom"
 export default function useUser(){
     const { jwt, setJWT } = useContext(UserContext);
     const { user, setUser } = useContext(UserContext);
+	const navigate = useNavigate()
 
     const login = useCallback(async (data)=>{
         const res = await UserService.login(data);
@@ -30,7 +32,9 @@ export default function useUser(){
         }
     })
     const logout = useCallback(() => {
-        window.location.href = routes.HOME_URL
+        if(window.location.pathname != '/'){
+            navigate('/')
+        }
         JwtService.destroyToken()
         setUser(null)
         setJWT(null);
