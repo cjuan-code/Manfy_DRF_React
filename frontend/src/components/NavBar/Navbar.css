@@ -18,3 +18,56 @@ ul>li>a:hover{
     color: #212529 !important;
     letter-spacing: 2px !important;
 }
+
+/* Notify */
+.notification-navbar {
+    margin-left: 5px;
+    width: 40px !important;
+    height: 40px !important;
+    right: 50px !important;
+    top: 50% !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    transition: all 0.5s ease-in-out !important;
+    outline: none !important;
+    background: #fff !important;
+  }
+  
+  .notification-navbar:hover {
+    background: #f885578e !important;
+    border: 1px solid #fff !important;
+  }
+  .notification-navbar:hover .notification i {
+    color: #fff !important;
+  }
+  
+  .notification-navbar:hover span {
+    background: #EB5E28 !important;
+  }
+  
+  .notification-navbar .notification i {
+    color: #EB5E28 !important;
+    font-size: 1.2rem !important;
+    transition: all 0.5s ease-in-out !important;
+  }
+  
+  .notification-navbar .notification .alert-message {
+    position: absolute !important;
+    top: -5px !important;
+    right: -5px !important;
+    background: #fff !important;
+    color: #EB5E28 !important;
+    border: 1px solid #EB5E28 !important;
+    padding: 5px !important;
+    border-radius: 50% !important;
+    height: 20px !important;
+    width: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-size: 0.8rem !important;
+    font-weight: bold !important;
+  }

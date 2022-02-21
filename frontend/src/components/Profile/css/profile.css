@@ -6,7 +6,7 @@
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  height: 230px;
+  height: 150px;
   background: #FFF;
   max-width: 750px;
   border-radius: 2px;
@@ -19,7 +19,7 @@
   width: 40%;
   height: 100%;
   background-image: url("https://www.fife.gov.uk/__data/assets/image/0033/81798/alert_icon.png");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   border-top-left-radius: 3px;
@@ -56,7 +56,7 @@
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  height: calc(100% - 100px);
+  /* height: calc(100% - 100px); */
 }
 
 .event_container .event_info .event_desc p {

@@ -22,7 +22,7 @@ class User(AbstractBaseUser, TimestampedModel):
     # objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', 'n_incidents', 'n_coupons', 'active','role','type']
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', 'n_incidents', 'n_coupons', 'active','role','types']
 
     class Meta:
         verbose_name = 'user'

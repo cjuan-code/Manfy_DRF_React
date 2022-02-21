@@ -4,11 +4,11 @@ import UserContext from "../../context/UserContext"
 import useUser from '../../../src/hooks/useUser'
 import useIncidents from '../../hooks/useIncidents'
 import useReservation from '../../hooks/useReservation'
+import useNotification from '../../hooks/useNotification'
 import { useForm } from "react-hook-form";
+import useRestaurant from '../../hooks/useRestaurant'
 import toastr from 'toastr';
-import { routes } from "../../secrets"
 import 'toastr/build/toastr.min.css'
-
 
 const ProfileComponent = ()=>{
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -18,19 +18,43 @@ const ProfileComponent = ()=>{
     const [isSetting, setSetting] = useState(true)
     const [isIncident, setIncident] = useState(false)
     const [isReservation, setReservation] = useState(false)
-    const {incident ,getIncident } = useIncidents()
-    const {reservation,ReadReservation} = useReservation()
+    const [isCoupons, setCoupons] = useState(false)
+    const {incident,deleteIncident,setDeleteIncident ,createIncident,getIncident } = useIncidents()
+    const {reservation,reserUser,DeleteReservation,UserReservation} = useReservation()
     const [ id, setId ] =useState(null)
-    
-    
+    const { countNotification } = useNotification()
+    const { restaurants } = useRestaurant()
+
+    useEffect(()=>{
+        UserReservation()
+    },[])
     var myArray = []
 
     for(var i = 0; i< user.n_coupons;i++){
         myArray.push(i)
     }
-    const deleteReservation = (id) =>{
-        console.log(id)
+
+    const changeDelete = ()=>{
+        var element = document.getElementsByClassName('active')[0]
+        if(element == undefined){
+            var element2 = document.getElementById('setting')
+            element2.classList.add('active')
+        }else{
+            element.classList.remove('active')
+            var element2 = document.getElementById('setting')
+            element2.classList.add('active')
+        }
+        setSetting(true)
+        setIncident(false)
+        setReservation(false)
+        setCoupons(false)
     }
+    useEffect(()=>{
+        if(deleteIncident){
+            changeDelete()
+        }
+        
+    },[deleteIncident,setDeleteIncident])
     const modal = (id)=>{
         setId(id)
     }
@@ -71,41 +95,74 @@ const ProfileComponent = ()=>{
     };
     const changeSettingValue = (value,id)=>{
         var element = document.getElementsByClassName('active')[0]
-        element.classList.remove('active')
-        var element2 = document.getElementById(id)
-        element2.classList.add('active')
+        if(element == undefined){
+            var element2 = document.getElementById(id)
+            element2.classList.add('active')
+        }else{
+            element.classList.remove('active')
+            var element2 = document.getElementById(id)
+            element2.classList.add('active')
+        }
+
         setSetting(value)
         setIncident(!value)
         setReservation(!value)
+        setCoupons(!value)
     }
     const changeIncidentValue = (value,id)=>{
         var element = document.getElementsByClassName('active')[0]
-        element.classList.remove('active')
-        var element2 = document.getElementById(id)
-        element2.classList.add('active')
+        if(element == undefined){
+            var element2 = document.getElementById(id)
+            element2.classList.add('active')
+        }else{
+            element.classList.remove('active')
+            var element2 = document.getElementById(id)
+            element2.classList.add('active')
+        }
         setIncident(value)
         setSetting(!value)
         setReservation(!value)
+        setCoupons(!value)
     }
     const changeReservationValue = (value,id)=>{
         var element = document.getElementsByClassName('active')[0]
-        element.classList.remove('active')
-        var element2 = document.getElementById(id)
-        element2.classList.add('active')
+        if(element == undefined){
+            var element2 = document.getElementById(id)
+            element2.classList.add('active')
+        }else{
+            element.classList.remove('active')
+            var element2 = document.getElementById(id)
+            element2.classList.add('active')
+        }
         setReservation(value)
         setSetting(!value)
         setIncident(!value)
+        setCoupons(!value)
     }
     const changeCuponsValue = (value,id)=>{
         var element = document.getElementsByClassName('active')[0]
+        if(element == undefined){
+            var element2 = document.getElementById(id)
+            element2.classList.add('active')
+        }else{
+            element.classList.remove('active')
+            var element2 = document.getElementById(id)
+            element2.classList.add('active')
+        }
+        setReservation(!value)
+        setSetting(!value)
+        setIncident(!value)
+        setCoupons(value)
+    }
+
+    const incidentCreate = (value)=>{
+        var element = document.getElementsByClassName('active')[0]
         element.classList.remove('active')
-        var element2 = document.getElementById(id)
-        element2.classList.add('active')
         setReservation(value)
         setSetting(value)
         setIncident(value)
+        setCoupons(value)
     }
-
 
     return(
         <div className="container">
@@ -124,7 +181,7 @@ const ProfileComponent = ()=>{
                 <div className="profile-option">
                     <div className="notification">
                         <i className="fa fa-bell"></i>
-                        <span className="alert-message">3</span>
+                        <span className="alert-message">{countNotification}</span>
                     </div>
                 </div>
             </div>
@@ -145,6 +202,9 @@ const ProfileComponent = ()=>{
                         <div className="profile-btn">
                             <button className="chatbtn" id="chatBtn"><i className="fa fa-comment"></i> Chat</button>
                         </div>
+                        <div className="profile-btn">
+                            <button className="chatbtn" id="chatBtn" onClick={(e)=>incidentCreate(false)}>Crear Incidencia</button>
+                        </div>
                     </div>
 
                 </div>
@@ -156,7 +216,7 @@ const ProfileComponent = ()=>{
                             <li className="user-post active" id="setting" onClick={(e)=>changeSettingValue(true,"setting")}>Ajustes</li>
                             <li className="user-review" id="incident" onClick={(e)=>changeIncidentValue(true,"incident")}>Incidencias</li>
                             <li className="user-setting" id="reservation" onClick={(e)=>changeReservationValue(true,"reservation")}>Reservas</li>
-                            <li className="user-cupons" id="cupon" onClick={(e)=>changeCuponsValue(false,"cupon")}>Cupones</li>
+                            <li className="user-cupons" id="cupon" onClick={(e)=>changeCuponsValue(true,"cupon")}>Cupones</li>
                         </ul>
                     </div>
                     
@@ -313,6 +373,8 @@ const ProfileComponent = ()=>{
                             </div>
                         </div>
                         :
+                        isCoupons
+                        ?
                         <div className="d-flex justify-content-between flex-wrap align-items-center container">
                             {myArray.map((num)=>(
                                 <div className="d-flex card text-center" key={num}>
@@ -327,7 +389,65 @@ const ProfileComponent = ()=>{
                                 </div>
                             ))}
                         </div>
-                        
+                        :
+                        <div>
+                            <form  control="" className="form-group" onSubmit={handleSubmit(createIncident)}>  
+                                <fieldset>
+                                    <label htmlFor="textarea">Cuerpo de la incidencia</label>
+                                    <textarea name="body" id="body" placeholder="Escriba el motivo de la incidencia" className="form-control" {...register("body",{
+									required:"You must write a reason",
+								    })}></textarea>
+                                </fieldset>
+                                {
+                                    (user.role == 'Restaurante') 
+                                    ?
+                                    <fieldset>
+                                        <label htmlFor="select-choice">Usuario</label>
+                                        <select name="select-choice" className="form-select" id="select-choice">
+                                            <option value="Choice 1">Elija el Usuario</option>
+                                            {
+                                                reserUser.map((userReser)=>(
+                                                    <option key={userReser.id} id="option" value={userReser.id} {...register("user_id",{
+                                                        required:"You must choose a option",
+                                                    })}>{userReser.first_name} {userReser.last_name} ({userReser.email})</option>
+                                                ))
+                                            } 
+                                        </select>
+                                        <fieldset>
+                                            <label htmlFor="text">Destinatario</label>
+                                            <input type="text" value="Usuario" className='form-control' id="destinatario" {...register("destinatario",{
+									            required:"Yo cannot change this input",
+								            })}></input>
+                                        </fieldset>
+                                    </fieldset>
+                                    :
+                                    <div>
+                                        <fieldset>
+                                            <label htmlFor="select-choice">Restaurante</label>
+                                            <select name="select-choice" id="select-choice" className="form-select">
+                                            <option value="Choice 1">Elija el restaurante</option>
+                                            {
+                                                restaurants.map((restaurant)=>(
+                                                    <option key={restaurant.id} value={restaurant.id} {...register("restaurant_id",{
+                                                        required:"You must choose a option",
+                                                    })}>{restaurant.name}</option>
+                                                ))
+                                            }
+                                            </select>
+                                        </fieldset>
+                                        <fieldset>
+                                            <label htmlFor="text">Destinatario</label>
+                                            <input type="text" value="Restaurante" className='form-control' {...register("destinatario",{
+									            required:"Yo cannot change this input",
+								            })}></input>
+                                        </fieldset>
+                                    </div>
+                                    
+                                }
+
+                                <button className='btn btn-dark mt-3' type='submit' >Enviar</button>
+                            </form>
+                        </div>
                     }
 
                     <div className="profile-body">
@@ -370,7 +490,7 @@ const ProfileComponent = ()=>{
                 </div>
                 <div className='modal-body'>
                     <button type="button" className="btn btn-secondary close" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" className="btn btn-primary delete" onClick={(e)=>deleteReservation(id)} data-bs-dismiss="modal">Eliminar</button>
+                    <button type="button" className="btn btn-primary delete" onClick={(e)=>DeleteReservation(id)} data-bs-dismiss="modal">Eliminar</button>
                 </div>
                 </div>
             </div>

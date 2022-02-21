@@ -4,10 +4,15 @@ import { Avatar } from 'react-rainbow-components';
 import "./Navbar.css"
 import useUser from '../../../src/hooks/useUser'
 import UserContext from "../../context/UserContext"
+import useNotification from '../../hooks/useNotification'
 
 const Navbar = () =>{
     const { isLogged, logout } = useUser()
     const { user, setUser } = useContext(UserContext);
+    const { countNotification } = useNotification()
+    if(countNotification>0){
+        var number = parseInt(countNotification)
+    }
     var initials = ''
     if(isLogged){
         if(user['first_name'] !=undefined && user['last_name'] !=undefined){
@@ -38,15 +43,15 @@ const Navbar = () =>{
                             isLogged
                             ?
                             <ul className="navbar-nav">
-                                                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {user['full_name']}
-                                </a>
-                                <ul className="dropdown-menu log-menu" >
-                                    <li><Link className="dropdown-item" to="profile">Profile</Link></li>
-                                    <li><a className="dropdown-item" onClick={logout}>Logout</a></li>
-                                </ul>
-                            </li>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {user['full_name']}
+                                    </a>
+                                    <ul className="dropdown-menu log-menu" >
+                                        <li><Link className="dropdown-item" to="profile">Profile</Link></li>
+                                        <li><a className="dropdown-item" onClick={logout}>Logout</a></li>
+                                    </ul>
+                                </li>
                                 <li className="nav-item">
                                 <Avatar
                                     className="rainbow-m-around_x-small text-black"
@@ -56,6 +61,21 @@ const Navbar = () =>{
                                     backgroundColor="white"
                                     color="black"
                                 />
+                                </li>
+                                <li className="nav-item dropdown">
+                                <div className="notification-navbar">
+                                    <div className="notification">
+                                        <i className="fa fa-bell"></i>
+                                        {
+                                            number
+                                            ?
+                                            <span className="alert-message">{number}</span>
+                                            :
+                                            <span className="alert-message">0</span>
+
+                                        }
+                                    </div>
+                                </div>
                                 </li>
                             </ul>
                             :
