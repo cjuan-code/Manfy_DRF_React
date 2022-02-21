@@ -13,8 +13,6 @@ export default function useUser(){
         const res = await UserService.register(data);
         const response = await res.json();
 
-        console.log(response, 'response')
-
         if (response.token) {
             setUser(response)
             JwtService.saveToken(response.token)  

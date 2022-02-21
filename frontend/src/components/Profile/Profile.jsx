@@ -24,7 +24,6 @@ const ProfileComponent = ()=>{
     const [ id, setId ] =useState(null)
     const { countNotification } = useNotification()
     const { restaurants } = useRestaurant()
-    console.log(incident)
     useEffect(()=>{
         UserReservation()
     },[])

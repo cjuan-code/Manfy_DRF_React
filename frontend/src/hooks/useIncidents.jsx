@@ -7,7 +7,6 @@ export default function useIncidents(){
     useEffect(()=>{
         getIncident()
     },[])
-    console.log(deleteIncident)
     const getIncident = useCallback(async()=>{
         const res = await IncidentService.getIncident()
         const response = await res.json()

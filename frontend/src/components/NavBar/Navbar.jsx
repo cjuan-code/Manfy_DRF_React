@@ -4,7 +4,7 @@ import { Avatar } from 'react-rainbow-components';
 import "./Navbar.css"
 import useUser from '../../../src/hooks/useUser'
 import UserContext from "../../context/UserContext"
-import useNotification from '../../hooks/useNotification'
+import { secret } from '../../secrets';
 
 const Navbar = () =>{
     const { isLogged, logout } = useUser()
@@ -43,6 +43,17 @@ const Navbar = () =>{
                             isLogged
                             ?
                             <ul className="navbar-nav">
+                                {
+                                    user.types == "admin" || user.types == "Admin"
+                                    ?
+                                        <li className="nav-item">
+                                            <a href={secret.ADMIN_URL}className="nav-link" >Admin</a>
+                                        </li>
+                                    :
+                                        <li className="nav-item">
+                                        </li>
+                                }
+
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {user['full_name']}

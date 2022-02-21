@@ -29,7 +29,8 @@ class userSerializer(serializers.ModelSerializer):
                 'n_incidents': user.n_incidents,
                 'n_coupons': user.n_coupons,
                 'is_active': user.is_active,
-                'role':user.role
+                'role':user.role,
+                'types':user.types
             },
             'token': user.token,
         }
