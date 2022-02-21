@@ -14,7 +14,7 @@ img{
   --bs-gutter-x: 0 !important;
 }
 .container-list>.card-restaurants{
-  max-width: 33%;
+  max-width: 30%;
 }
 
 .card_btn {

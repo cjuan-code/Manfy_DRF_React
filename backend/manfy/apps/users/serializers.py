@@ -183,7 +183,7 @@ class incidentSerializer(serializers.ModelSerializer):
             'user_id':instance.user_id,
             'name':instance.name
         }
-    def to_incident(instance):
+    def to_incident_create(instance):
         return{
             'id':instance.id,
             'body':instance.body,
@@ -216,7 +216,7 @@ class incidentSerializer(serializers.ModelSerializer):
                 body = context['body'],
                 recipient = context['recipient']
             )
-        incident2 = incidentSerializer.to_incident(incident)
+        incident2 = incidentSerializer.to_incident_create(incident)
         return incident2
     def read(context):
         user = context['user']

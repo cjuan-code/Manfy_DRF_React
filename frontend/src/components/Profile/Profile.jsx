@@ -24,7 +24,7 @@ const ProfileComponent = ()=>{
     const [ id, setId ] =useState(null)
     const { countNotification } = useNotification()
     const { restaurants } = useRestaurant()
-
+    console.log(incident)
     useEffect(()=>{
         UserReservation()
     },[])
@@ -377,7 +377,7 @@ const ProfileComponent = ()=>{
                         ?
                         <div className="d-flex justify-content-between flex-wrap align-items-center container">
                             {myArray.map((num)=>(
-                                <div className="d-flex card text-center" key={num}>
+                                <div className="d-flex card text-center card-cupon" key={num}>
                                     <div className="image">
                                         <img src="https://i.imgur.com/DC94rZe.png" width="150"/>
                                     </div>

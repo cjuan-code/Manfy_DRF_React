@@ -9,9 +9,9 @@ import useNotification from '../../hooks/useNotification'
 const Navbar = () =>{
     const { isLogged, logout } = useUser()
     const { user, setUser } = useContext(UserContext);
-    const { countNotification } = useNotification()
-    if(countNotification>0){
-        var number = parseInt(countNotification)
+    const { notify, setNotify } = useContext(UserContext)
+    if(notify>0){
+        var number = parseInt(notify)
     }
     var initials = ''
     if(isLogged){
@@ -69,7 +69,7 @@ const Navbar = () =>{
                                         {
                                             number
                                             ?
-                                            <span className="alert-message">{number}</span>
+                                            <span className="alert-message">{notify}</span>
                                             :
                                             <span className="alert-message">0</span>
 
